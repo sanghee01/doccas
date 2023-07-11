@@ -8,4 +8,19 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: 773dd10104a265b47ab4ccbbfccc108d
+  - enabled: 1
+    path: Assets/Scenes/ShopScene.unity
+    guid: b5ea5947ac84f754bb82465703bf07fb
+  - enabled: 1
+    path: Assets/Scenes/DepressionScoreScene.unity
+    guid: 9bd69ae5b1bd1de44aca15ae9e6f8198
+  - enabled: 1
+    path: Assets/Scenes/WalkScene.unity
+    guid: 572a816bb5cee784096b3b288f8ba853
+  - enabled: 1
+    path: Assets/Scenes/ChatScene.unity
+    guid: d3c873adee48212459296f8ff1fa47db
+  - enabled: 1
+    path: Assets/Scenes/CollectionScene.unity
+    guid: 9cfee94a89e1a14439b7ab78124ff75a
   m_configObjects: {}
