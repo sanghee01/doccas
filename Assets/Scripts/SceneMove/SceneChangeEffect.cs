@@ -10,7 +10,7 @@ public class SceneChangeEffect : MonoBehaviour
     Image image;
     float time, start, end;
     public string nextScene;
-    void Start()
+    private void Start()
     {
         start = 1f;
         end = 0f;
@@ -28,7 +28,7 @@ public class SceneChangeEffect : MonoBehaviour
         Color color = image.color;
         while (color.a < 1.0f)  
         {
-            time += Time.deltaTime * 2;
+            time += Time.deltaTime;
             color.a = Mathf.Lerp(end, start, time);
             image.color = color;
             yield return null;
@@ -40,7 +40,7 @@ public class SceneChangeEffect : MonoBehaviour
         time = 0f;
         while (color.a > 1.0f)
         {
-            time += Time.deltaTime * 2;
+            time += Time.deltaTime;
             color.a = Mathf.Lerp(start, end, time);
             image.color = color;
             yield return null;

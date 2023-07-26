@@ -8,31 +8,30 @@ using UnityEngine.UI;
 
 public class DogAnimation : MonoBehaviour
 {
-    public GameObject Dog1;
-    public GameObject Dog2;
-    public bool otherAnim;
-    private void Awake()
+    public Animator anim;
+    void Update()
     {
-        otherAnim = false;
-        Dog1.SetActive(true);
-        Dog2.SetActive(false);
-    }
-    public void Update()
-    {
-        if (Input.GetMouseButton(0))
+        // 마우스 왼쪽 버튼을 클릭했을 때
+        if (Input.GetMouseButtonDown(0))
         {
-            StartCoroutine(PlayOtherAnimation());
+            // 스크린 좌표를 월드 좌표로 변환합니다.
+            Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero);
+            // Raycasting을 통해 오브젝트와 충돌을 감지합니다.
+            if (hit.collider != null)
+            {
+                Debug.Log(hit.collider.name);
+                if (hit.collider.name == "Dog")
+                {
+                    anim.SetBool("isTouched", true);
+                    StartCoroutine(WaitForSecond());
+                }
+            }
         }
     }
-
-    private IEnumerator PlayOtherAnimation()
+    IEnumerator WaitForSecond()
     {
-        otherAnim = true;
-        Dog2.SetActive(true);
-        Dog1.SetActive(false);
         yield return new WaitForSeconds(2.0f);
-        Dog1.SetActive(true);
-        Dog2.SetActive(false);
-        otherAnim = false;
+        anim.SetBool("isTouched", false);
     }
 }
