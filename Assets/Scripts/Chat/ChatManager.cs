@@ -11,16 +11,16 @@ public class ChatManager : MonoBehaviour
     public GameObject YellowArea, WhiteArea;
     public RectTransform ContentRect;
     public Scrollbar scrollBar;
-    public TMP_InputField inputField;  // ¹®ÀÚ ÀÔ·ÂÃ¢
+    public TMP_InputField inputField;  // ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½Ã¢
     AreaScript LastArea;
   
 
     // Update is called once per frame
     void Update()
     {
-        // ÀÔ·ÂÃ¢ÀÌ Æ÷Ä¿½ºµÇ¾îÀÖÁö ¾ÊÀ» ¶§ EnterÅ° ´©¸£¸é
+        // ï¿½Ô·ï¿½Ã¢ï¿½ï¿½ ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ EnterÅ° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (Input.GetKeyDown(KeyCode.Return) && inputField.isFocused == false)
-            // ÀÔ·ÂÃ¢ Æ÷Ä¿½º È°¼ºÈ­
+            // ï¿½Ô·ï¿½Ã¢ ï¿½ï¿½Ä¿ï¿½ï¿½ È°ï¿½ï¿½È­
             inputField.ActivateInputField();
     }
 
@@ -34,7 +34,7 @@ public class ChatManager : MonoBehaviour
         }
     }
 
-    // enterÅ°³ª ¹öÆ°À¸·Î Àü¼Û
+    // enterÅ°ï¿½ï¿½ ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public async void UpdateChat()
     {
         string text = inputField.text;
@@ -42,16 +42,17 @@ public class ChatManager : MonoBehaviour
         if (text.Equals("")) return;
 
         Chat(true, text, "me", null);
-        // Chat(false, text, "Å¸ÀÎ", null);
+        // Chat(false, text, "Å¸ï¿½ï¿½", null);
 
-        inputField.text = "";   // inputField ³»¿ë ÃÊ±âÈ­
+        inputField.text = "";   // inputField ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
 
         // ChatGPT
         GameObject obj = GameObject.Find("ChatGPTManager");
         //Debug.Log(obj.GetComponent<OpenAI.ChatGpt>());
         await obj.GetComponent<OpenAI.ChatGpt>().SendReply(text);
         String gptMsg;
-        gptMsg = obj.GetComponent<OpenAI.ChatGpt>().receivedMessage;
+        gptMsg = obj.GetComponent<OpenAI.ChatGpt>().receivedMessage;    // chatgptï¿½Îºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½
+        if (gptMsg.Equals("")) gptMsg = "error!";
         Debug.Log("ChatManager.cs : "+gptMsg);
         Chat(false, gptMsg, "{puppy name}", null);
         //Debug.Log("ChatManager.cs : end");
@@ -67,15 +68,15 @@ public class ChatManager : MonoBehaviour
         bool isBottom = scrollBar.value <= 0.00001f;
 
 
-        // Ã¤ÆÃ ¹Ú½º ¿µ¿ªÀ» ¸¸µé°í ÅØ½ºÆ® ´ëÀÔ
+        // Ã¤ï¿½ï¿½ ï¿½Ú½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
         AreaScript Area = Instantiate(isSend ? YellowArea : WhiteArea).GetComponent<AreaScript>();
         Area.transform.SetParent(ContentRect.transform, false);
-        Area.BoxRect.sizeDelta = new Vector2(800, Area.BoxRect.sizeDelta.y);    // ¹Ú½º ÃÖ´ë Å©±â
+        Area.BoxRect.sizeDelta = new Vector2(800, Area.BoxRect.sizeDelta.y);    // ï¿½Ú½ï¿½ ï¿½Ö´ï¿½ Å©ï¿½ï¿½
         Area.TextRect.GetComponent<Text>().text = text;
         Fit(Area.BoxRect);
 
 
-        // µÎ ÁÙ ÀÌ»óÀÌ¸é Å©±â¸¦ ÁÙÀÌ°í, ÇÑ ÁÙÀÌ ¾Æ·¡·Î ³»·Á°¡¸é ¹Ù·Î Àü Å©±â¸¦ ´ëÀÔ 
+        // ï¿½ï¿½ ï¿½ï¿½ ï¿½Ì»ï¿½ï¿½Ì¸ï¿½ Å©ï¿½â¸¦ ï¿½ï¿½ï¿½Ì°ï¿½, ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù·ï¿½ ï¿½ï¿½ Å©ï¿½â¸¦ ï¿½ï¿½ï¿½ï¿½ 
         float X = Area.TextRect.sizeDelta.x + 42;
         float Y = Area.TextRect.sizeDelta.y;
         if (Y > 49)
@@ -91,13 +92,13 @@ public class ChatManager : MonoBehaviour
         else Area.BoxRect.sizeDelta = new Vector2(X, Y);
 
 
-        // ½Ã°£ °¡Á®¿À´Â ºÎºÐ
+        // ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½
         DateTime t = DateTime.Now;
         Area.Time = t.ToString("yyyy-MM-dd-HH-mm");
         Area.User = user;
 
 
-        // ½Ã°£ º¸¿©ÁÖ´Â ºÎºÐ
+        // ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½Îºï¿½
         int hour = t.Hour;
         if (t.Hour == 0) hour = 12;
         else if (t.Hour > 12) hour -= 12;
@@ -108,7 +109,7 @@ public class ChatManager : MonoBehaviour
         Area.Tail.SetActive(true);
 
 
-        // ChatGPT°¡ º¸³»´Â ºÎºÐ
+        // ChatGPTï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½
         if (!isSend)
         {
             Area.UserImage.gameObject.SetActive(true);
@@ -126,7 +127,7 @@ public class ChatManager : MonoBehaviour
         LastArea = Area;
 
 
-        // ½ºÅ©·Ñ¹Ù ¸Ç ¾Æ·¡·Î ³»¸®±â
+        // ï¿½ï¿½Å©ï¿½Ñ¹ï¿½ ï¿½ï¿½ ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         Invoke("ScrollDelay", 0.03f);
     }
 

@@ -7,7 +7,7 @@ namespace OpenAI
 {
     public class ChatGpt : MonoBehaviour
     {
-        private OpenAIApi openai = new OpenAIApi();
+        private OpenAIApi openai = new OpenAIApi(); 
         private List<ChatMessage> messages = new List<ChatMessage>();
         private string prompt = "You are a puppy. The opponent is your owner who is suffering from depression. You should comfort your master and help him overcome his depression. Always be kind in a chat room and reply to the questions. Don't break character. Don't ever mention that you are an AI model. Always say 'woof woof' before and after the conversation";
         // public string sentMessage = "Hi";   // temp
@@ -45,7 +45,7 @@ namespace OpenAI
 
                 
                 
-                receivedMessage = message.Content;  // 변수 저장
+                receivedMessage = message.Content;  // 받은 메시지 저장
                 //Debug.Log("receivedMessage------"+receivedMessage); // 잘 작동
                 //Debug.Log("this.receivedMessage------" + this.receivedMessage); // 잘 작동
                 messages.Add(message);
